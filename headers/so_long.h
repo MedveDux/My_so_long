@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/10 20:19:36 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/12 18:48:40 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "../minilibx_opengl_20191021/mlx.h"
+
+# ifndef SCALE
+#  define SCALE 50
+# endif
 
 enum e_errors
 {
@@ -54,10 +58,18 @@ typedef struct s_data
 	void	*img;
 	t_map	map;
 }	t_data;
+//so_long
+void	for_parsing(char *line, int error_code, t_map *m);
+void	parsing(char *argv, t_map *m);
 
+//parsing_utils
+size_t	len_with_sl(const char *s);
+char	*ft_strjoin_with_sl(char const *s1, char const *s2);
+void	error(int error);
+int		fd_map(char *path);
+void	initialization(t_map *m, char *line);
+//parsing
+int		check_line(char *line, t_map *m);
+void	check_error(int error_code, char *line, int wall);
+void	check_error_after(t_map *m);
 #endif
-
-//if (ft_strncmp(&path[ft_strlen_sl(path) - 4], ".ber", 5) != 0)//check if 4 or 5 -
-//&path[ft_strlen_sl(path) - 4]
-//path[ft_strlen_sl(path) - 4] == *(path + (ft_strlen_sl(path) - 4))
-//(path + (ft_strlen_sl(path) - 4)) == &path[ft_strlen_sl(path) - 4]

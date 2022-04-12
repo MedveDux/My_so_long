@@ -6,13 +6,13 @@
 #    By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 16:56:09 by cyelena           #+#    #+#              #
-#    Updated: 2022/04/10 20:45:09 by cyelena          ###   ########.fr        #
+#    Updated: 2022/04/12 18:28:30 by cyelena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	so_long
 
-SRCS		=	srcs/so_long.c get_next_line/get_next_line.c
+SRCS		=	srcs/so_long.c get_next_line/get_next_line.c srcs/parsing_utils.c srcs/parsing.c
 OBJS		=	$(SRCS:.c=.o)
 
 HEAD		=	headers/so_long.h headers/get_next_line.h
@@ -38,7 +38,7 @@ clean:
 			make clean -C ./libft
 			make clean -C ./minilibx_opengl_20191021
 fclean:		clean
-		make fclean -c ./libft
+		make fclean -C ./libft
 		$(RM) $(NAME)
 re:	fclean all
 		make re -C ./libft
