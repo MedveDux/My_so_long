@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:55:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/12 18:48:54 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/14 21:14:03 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv)
 	t_data	m;
 	char	*tmp;//
 	int	i = 0;//
+	void *chr;//
+	int x, y;
 
 	if (argc != 2)
 	{
@@ -68,6 +70,15 @@ int	main(int argc, char **argv)
 	parsing(argv[1], &m.map);
 	m.mlx = mlx_init();
 	m.win = mlx_new_window(m.mlx, m.map.width * SCALE, m.map.height * SCALE, "so long");
+	if (m.mlx == NULL || m.win == NULL)
+	{
+		free(m.win);
+		error(MLX_ERROR);
+	}
+	chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/water.xpm", &x, &y);
+	mlx_put_image_to_window(m.mlx, m.win, chr, 0, 0);
+	chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/fish_player.xpm", &x, &y);
+	mlx_put_image_to_window(m.mlx, m.win, chr, 0, 0);
 	i = m.map.height;//
 	tmp = m.map.map;//
 	while (i--)//

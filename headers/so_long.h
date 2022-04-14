@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/12 18:48:40 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/12 19:21:17 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum e_errors
 	COIN_ERROR = 6,
 	FILE_ERROR = 7,
 	EXTENTION_ERROR = 8,
+	MLX_ERROR = 9,
 };
 
 typedef struct s_flags

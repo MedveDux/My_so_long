@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:14:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/12 18:20:04 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/12 19:28:08 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	error(int error)
 		ft_putstr_fd("file error", 2);
 	else if (error == EXTENTION_ERROR)
 		ft_putstr_fd("your filename is incorrect", 2);
+	else if (error == MLX_ERROR)
+		ft_putstr_fd("mlx error", 2);
 	else
 		ft_putstr_fd("wall error", 2);
 	exit(EXIT_FAILURE);
