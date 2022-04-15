@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/12 19:21:17 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/15 21:21:37 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@
 # ifndef SCALE
 #  define SCALE 50
 # endif
+
+# ifndef OBJ
+#  define OBJ 8
+# endif
+
+enum e_keys
+{
+	RIGHT_KEY = 124,
+	LEFT_KEY = 123,
+	UP_KEY = 126,
+	DOWN_KEY = 125,
+	D_KEY = 2,
+	A_KEY = 0,
+	W_KEY = 13,
+	S_KEY = 1,
+	ESC = 53,
+};
 
 enum e_errors
 {
@@ -44,6 +61,8 @@ typedef struct s_flags
 
 typedef struct s_map
 {
+	size_t	x;
+	size_t	y;
 	size_t	height;
 	size_t	width;
 	t_flags	flags;
@@ -52,13 +71,24 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	size_t	x;
-	size_t	y;
 	void	*mlx;
 	void	*win;
-	void	*img;
+	void	*img[OBJ];
 	t_map	map;
 }	t_data;
+
+enum e_objects
+{
+	WATER,
+	BED,
+	WALL1,
+	WALL2,
+	WALL3,
+	COIN,
+	PLAYER,
+	EXIT,
+};
+
 //so_long
 void	for_parsing(char *line, int error_code, t_map *m);
 void	parsing(char *argv, t_map *m);

@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:55:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/14 21:14:03 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/15 21:24:37 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,62 @@ void	parsing(char *argv, t_map *m)
 	check_error_after(m);
 }
 
+
+
+void	init_and_image(t_data *m)
+{
+	int	x;
+	int	y;
+
+	m->mlx = mlx_init();
+	if (m->mlx == NULL)
+	{
+		free(m->map.map);
+		error(MLX_ERROR);
+	}
+	m->win = mlx_new_window(m->mlx, m->map.width * SCALE,
+			m->map.height * SCALE, "so long");
+	if (m->win == NULL)
+	{
+		free(m->map.map);
+		free(m->mlx);
+		error(MLX_ERROR);
+	}
+	m->img[WATER] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/water.xpm", &x, &y);
+	m->img[BED] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/fish_bad.xpm", &x, &y);
+	m->img[WALL1] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/seaweed_1.xpm", &x, &y);
+	m->img[WALL2] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/seaweed_2.xpm", &x, &y);
+	m->img[WALL3] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/seaweed_3.xpm", &x, &y);
+	m->img[COIN] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/worm.xpm", &x, &y);
+	m->img[PLAYER] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/player.xpm", &x, &y);
+	m->img[EXIT] = mlx_xpm_file_to_image(m->mlx,
+			"/Users/cyelena/Desktop/My_so_long/texture/bubble.xpm", &x, &y);
+	int	i = m->map.height;//
+	int j = 0;
+	while (i--)//
+	{//
+		while (j < m->map.width)
+		{
+			if (m->map.map[j] == "1")
+				mlx_put_image_to_window(m->mlx, m->win, m->img[WALL1], i * SCALE, j * SCALE);
+			j++;
+		}
+		j = 0;
+	}//
+	while(j++ < m->map.width * m->map.height)
+	{
+		if (m->map.map[j] == "1")
+			mlx_put_image_to_window(m->mlx, m->win, m->img[WALL1], i * SCALE, j * SCALE);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	m;
@@ -68,16 +124,19 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	parsing(argv[1], &m.map);
-	m.mlx = mlx_init();
-	m.win = mlx_new_window(m.mlx, m.map.width * SCALE, m.map.height * SCALE, "so long");
-	if (m.mlx == NULL || m.win == NULL)
-	{
-		free(m.win);
-		error(MLX_ERROR);
-	}
+	init_and_image(&m);
+	// m.mlx = mlx_init();
+	// if (m.mlx == NULL)
+	// 	error(MLX_ERROR);
+	// m.win = mlx_new_window(m.mlx, m.map.width * SCALE, m.map.height * SCALE, "so long");
+	// if (m.win == NULL)
+	// {
+	// 	free(m.win);// why
+	// 	error(MLX_ERROR);
+	// }
 	chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/water.xpm", &x, &y);
 	mlx_put_image_to_window(m.mlx, m.win, chr, 0, 0);
-	chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/fish_player.xpm", &x, &y);
+	chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/bubble.xpm", &x, &y);
 	mlx_put_image_to_window(m.mlx, m.win, chr, 0, 0);
 	i = m.map.height;//
 	tmp = m.map.map;//
