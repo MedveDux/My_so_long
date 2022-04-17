@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/15 21:21:37 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/17 18:49:24 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # include "../minilibx_opengl_20191021/mlx.h"
 
 # ifndef SCALE
-#  define SCALE 50
+#  define SCALE 100
 # endif
 
 # ifndef OBJ
 #  define OBJ 8
+# endif
+
+# ifndef DELAY
+#  define DELAY 4000
 # endif
 
 enum e_keys
@@ -79,11 +83,11 @@ typedef struct s_data
 
 enum e_objects
 {
-	WATER,
-	BED,
 	WALL1,
 	WALL2,
 	WALL3,
+	WATER,
+	BED,
 	COIN,
 	PLAYER,
 	EXIT,

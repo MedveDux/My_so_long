@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:14:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/12 19:28:08 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/17 20:42:05 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	error(int error)
 	else if (error == MLX_ERROR)
 		ft_putstr_fd("mlx error", 2);
 	else
-		ft_putstr_fd("wall error", 2);
+		ft_putstr_fd("error", 2);
 	exit(EXIT_FAILURE);
 }
 

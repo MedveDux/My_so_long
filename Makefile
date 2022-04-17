@@ -6,7 +6,7 @@
 #    By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 16:56:09 by cyelena           #+#    #+#              #
-#    Updated: 2022/04/12 18:28:30 by cyelena          ###   ########.fr        #
+#    Updated: 2022/04/17 16:03:40 by cyelena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ HEAD_LIBFT	=	libft/libft.h
 
 CC			=	gcc
 RM			=	rm -rf
-FLAGS		=	-Wall -Werror -Wextra
+FLAGS		=	#-Wall -Werror -Wextra
 FLAGS_MXL	=	-lmlx -framework OpenGL -framework AppKit
 
 all:		$(NAME)
