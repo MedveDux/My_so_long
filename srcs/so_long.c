@@ -6,27 +6,27 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:55:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/17 20:27:16 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/22 18:44:08 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/so_long.h"
 
-void	for_parsing(char *line, int error_code, t_map *m)
+void	for_parsing(char *line, int error_code, t_data *m, int i)
 {
 	if (line != NULL)
 	{
-		error_code = check_line(line, m);
+		error_code = check_line(line, m, i + 1);
 		if (error_code != 0)
 		{
 			free(line);
-			free(m->map);
+			free(m->map.map);
 			error(error_code);
 		}
 	}	
 }
 
-void	parsing(char *argv, t_map *m)
+void	parsing(char *argv, t_data *m)
 {
 	int		fd;
 	char	*line;
@@ -36,22 +36,29 @@ void	parsing(char *argv, t_map *m)
 
 	fd = fd_map(argv);
 	line = get_next_line(fd);
-	initialization(m, line);
-	error_code = check_line(line, m);
-	check_error(error_code, line, m->flags.wall);
+	if (line == NULL)
+	{
+		free (line);
+		error(EXTENTION_ERROR);//??
+	}
+	m->map.width = len_with_sl(line);
+	error_code = check_line(line, m, 0);
+	check_error(error_code, line, m->map.flags.wall);
 	i = 0;
 	while (line)
 	{
-		tmp = m->map;
-		m->map = ft_strjoin_with_sl(tmp, line);
+		tmp = m->map.map;
+		m->map.map = ft_strjoin_with_sl(tmp, line);
 		free(tmp);
 		free(line);
-		i++;
+		if (m->map.map == NULL)
+			error (42);
 		line = get_next_line(fd);
-		for_parsing(line, error_code, m);
+		for_parsing(line, error_code, m, i);
+		i++;
 	}
-	m->height = i;
-	check_error_after(m);
+	m->map.height = i;
+	check_error_after(&m->map);
 }
 
 
@@ -142,23 +149,38 @@ void	seaweed(t_data *m)
 // 	else
 // 		count++;
 // }
+void	map_init(t_data *m)
+{
+	m->map.map = NULL;
+	m->map.width = 0;
+	m->map.height = 0;
+	m->map.flags.coin = 0;
+	m->map.flags.enemy = 0;
+	m->map.flags.exit = 0;
+	m->map.flags.player = 0;
+	m->map.flags.wall = 0;
+}
 
 void	init(t_data *m)
 {
-	m->mlx = mlx_init();
-	if (m->mlx == NULL)
-	{
-		free(m->map.map);
-		error(MLX_ERROR);
-	}
-	m->win = mlx_new_window(m->mlx, m->map.width * SCALE,
-			m->map.height * SCALE, "so long");
-	if (m->win == NULL)
-	{
-		free(m->map.map);
-		free(m->mlx);
-		error(MLX_ERROR);
-	}
+	// m->mlx = mlx_init();
+	// if (m->mlx == NULL)
+	// 	error(MLX_ERROR);
+	// m->win = mlx_new_window(m->mlx, m->map.width * SCALE,
+	// 		m->map.height * SCALE, "so long");
+	// if (m->win == NULL)
+	// {
+	// 	free(m->mlx);
+	// 	error(MLX_ERROR);
+	// }
+	m->steps = 0;
+	m->player.x = 0;
+	m->player.y = 0;
+	m->enemy.prev_x = 0;
+	m->enemy.prev_y = 0;
+	m->enemy.x = 0;
+	m->enemy.y = 0;
+	map_init(m);
 }
 
 void	render(t_data *m)
@@ -177,9 +199,9 @@ void	render(t_data *m)
 			if ((m->map.map)[j + i * m->map.width] == '1')
 				mlx_put_image_to_window(m->mlx, m->win, m->img[WALL1], \
 				j * SCALE, i * SCALE);
-			if ((m->map.map)[j + i * m->map.width] == 'P')
-				mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], \
-				j * SCALE, i * SCALE);
+			// if ((m->map.map)[j + i * m->map.width] == 'P')
+			// 	mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], \
+			// 	j * SCALE, i * SCALE);
 			if ((m->map.map)[j + i * m->map.width] == 'C')
 				mlx_put_image_to_window(m->mlx, m->win, m->img[COIN], \
 				j * SCALE, i * SCALE);
@@ -188,6 +210,8 @@ void	render(t_data *m)
 				j * SCALE, i * SCALE);
 		}
 	}
+	mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], \
+				m->player.x * SCALE, m->player.y * SCALE);
 }
 
 void	image(t_data *m)
@@ -219,10 +243,64 @@ void	ft_exit(t_data *m)
 	free(m->map.map);
 	exit(0);
 }
-
-void ft_key(t_data *m)
+void win_game(t_data *m)
 {
+	ft_putstr_fd("You win! Steps - ", 1);
+	ft_putnbr_fd(m->steps, 1);
+	ft_exit (m);
+}
+
+void ft_move(t_data *m, int x, int y)
+{
+	char	move;
+
+	move = m->map.map[y * m->map.width + x];
+	if (move == 'E' && m->map.flags.coin == 0)
+		win_game(m);
+	if (move == '1' || (move == 'E' && m->map.flags.coin > 0))
+		return ;
+	if (m->enemy.x == x && m->enemy.y == y)
+		{
+			ft_putstr_fd("You died! ", 1);
+			ft_putnbr_fd(m->steps, 1);
+			ft_putstr_fd("steps!\n", 1);
+			ft_exit(m);
+		}
+	if (move == '0')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.y * SCALE, m->player.x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], y * SCALE, x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], y * SCALE, x * SCALE);
+	}
+	else if (move == 'C')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.y * SCALE, m->player.x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], y * SCALE, x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], y * SCALE, x * SCALE);
+		m->map.map[y * m->map.width + x] = '0';
+		m->map.flags.coin--;
+	}
+	m->player.y = y;
+	m->player.x = x;
+	m->steps++;
+	mlx_string_put(m->mlx, m->win, 10, 15, 0x880000, "Moves: ");
+	mlx_string_put(m->mlx, m->win, 70, 15, 0x880000, ft_itoa(m->steps));
 	
+}
+
+int ft_key(int key, t_data *m)
+{
+	if (key == ESC)
+		ft_exit(m);
+	else if (key == RIGHT_KEY || key == D_KEY)
+		ft_move(m, m->player.x + 1, m->player.y);
+	else if (key == LEFT_KEY || key == A_KEY)
+		ft_move(m, m->player.x - 1, m->player.y);
+	else if (key == UP_KEY || key == W_KEY)
+		ft_move(m, m->player.x, m->player.y - 1);
+	else if (key == DOWN_KEY || key == S_KEY)
+		ft_move(m, m->player.x, m->player.y + 1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -238,8 +316,22 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Wrong number of arguments!", 2);
 		return (EXIT_FAILURE);
 	}
-	parsing(argv[1], &m.map);
 	init(&m);
+	parsing(argv[1], &m);
+	m.mlx = mlx_init();
+	if (m.mlx == NULL)
+	{
+		free (m.map.map);
+		error(MLX_ERROR);
+	}
+	m.win = mlx_new_window(m.mlx, m.map.width * SCALE,
+			m.map.height * SCALE, "so long");
+	if (m.win == NULL)
+	{
+		free(m.mlx);
+		free (m.map.map);
+		error(MLX_ERROR);
+	}
 	image(&m);
 	render(&m);
 	// m.mlx = mlx_init();

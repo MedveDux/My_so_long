@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:14:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/17 20:42:05 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/19 18:23:15 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	error(int error)
 		ft_putstr_fd("your filename is incorrect", 2);
 	else if (error == MLX_ERROR)
 		ft_putstr_fd("mlx error", 2);
+	else if (error == ENEMY_ERROR)
+		ft_putstr_fd("enemy error", 2);
 	else
 		ft_putstr_fd("error", 2);
 	exit(EXIT_FAILURE);
@@ -86,10 +88,4 @@ int	fd_map(char *path)
 	if (fd < 0)
 		error(FILE_ERROR);
 	return (fd);
-}
-
-void	initialization(t_map *m, char *line)
-{
-	ft_memset(m, 0, sizeof(m));
-	m->width = len_with_sl(line);
 }

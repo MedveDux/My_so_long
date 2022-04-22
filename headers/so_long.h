@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/17 18:49:24 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/19 18:56:15 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ enum e_errors
 	FILE_ERROR = 7,
 	EXTENTION_ERROR = 8,
 	MLX_ERROR = 9,
+	ENEMY_ERROR = 10,
 };
 
 typedef struct s_flags
@@ -60,25 +61,41 @@ typedef struct s_flags
 	int		wall;
 	int		player;
 	int		exit;
+	int		enemy;
 	int		coin;
 }	t_flags;
 
 typedef struct s_map
 {
-	size_t	x;
-	size_t	y;
 	size_t	height;
 	size_t	width;
 	t_flags	flags;
 	char	*map;
 }	t_map;
 
+typedef struct s_player
+{
+	size_t	x;
+	size_t	y;
+}	t_player;
+
+typedef struct s_enemy
+{
+	size_t	x;
+	size_t	y;
+	size_t	prev_x;
+	size_t	prev_y;
+}	t_enemy;
+
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img[OBJ];
-	t_map	map;
+	int			steps;
+	void		*mlx;
+	void		*win;
+	void		*img[OBJ];
+	t_map		map;
+	t_player	player;
+	t_enemy		enemy;
 }	t_data;
 
 enum e_objects
@@ -94,17 +111,15 @@ enum e_objects
 };
 
 //so_long
-void	for_parsing(char *line, int error_code, t_map *m);
-void	parsing(char *argv, t_map *m);
 
 //parsing_utils
 size_t	len_with_sl(const char *s);
 char	*ft_strjoin_with_sl(char const *s1, char const *s2);
 void	error(int error);
 int		fd_map(char *path);
-void	initialization(t_map *m, char *line);
 //parsing
-int		check_line(char *line, t_map *m);
+int		check_char(t_data *m, char *line, int y, int count);
+int		check_line(char *line, t_data *m, int y);
 void	check_error(int error_code, char *line, int wall);
 void	check_error_after(t_map *m);
 #endif
