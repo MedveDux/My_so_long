@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:55:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/22 18:44:08 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/22 21:27:07 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	seaweed_util(t_data *m, enum e_objects seaweed)
 				m->img[WATER], j * SCALE, i * SCALE);
 				mlx_put_image_to_window(m->mlx, m->win, \
 					m->img[seaweed], j * SCALE, i * SCALE);
+				mlx_string_put(m->mlx, m->win, 10, 15, 0x880000, "Moves: ");
+				mlx_string_put(m->mlx, m->win, 70, 15, 0x880000, ft_itoa(m->steps));
 			}
 			j++;
 		}
@@ -212,6 +214,8 @@ void	render(t_data *m)
 	}
 	mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], \
 				m->player.x * SCALE, m->player.y * SCALE);
+	mlx_put_image_to_window(m->mlx, m->win, m->img[BED], \
+				m->enemy.x * SCALE, m->enemy.y * SCALE);
 }
 
 void	image(t_data *m)
@@ -260,31 +264,31 @@ void ft_move(t_data *m, int x, int y)
 	if (move == '1' || (move == 'E' && m->map.flags.coin > 0))
 		return ;
 	if (m->enemy.x == x && m->enemy.y == y)
-		{
-			ft_putstr_fd("You died! ", 1);
-			ft_putnbr_fd(m->steps, 1);
-			ft_putstr_fd("steps!\n", 1);
-			ft_exit(m);
-		}
+	{
+		ft_putstr_fd("You died! ", 1);
+		ft_putnbr_fd(m->steps, 1);
+		ft_putstr_fd("steps!\n", 1);
+		ft_exit(m);
+	}
 	if (move == '0')
 	{
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.y * SCALE, m->player.x * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], y * SCALE, x * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], y * SCALE, x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.x * SCALE, m->player.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], x * SCALE, y * SCALE);
 	}
 	else if (move == 'C')
 	{
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.y * SCALE, m->player.x * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], y * SCALE, x * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], y * SCALE, x * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.x * SCALE, m->player.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], x * SCALE, y * SCALE);
 		m->map.map[y * m->map.width + x] = '0';
 		m->map.flags.coin--;
 	}
 	m->player.y = y;
 	m->player.x = x;
 	m->steps++;
-	mlx_string_put(m->mlx, m->win, 10, 15, 0x880000, "Moves: ");
-	mlx_string_put(m->mlx, m->win, 70, 15, 0x880000, ft_itoa(m->steps));
+	// mlx_string_put(m->mlx, m->win, 10, 15, 0x880000, "Moves: ");
+	// mlx_string_put(m->mlx, m->win, 70, 15, 0x880000, ft_itoa(m->steps));
 	
 }
 
@@ -295,7 +299,7 @@ int ft_key(int key, t_data *m)
 	else if (key == RIGHT_KEY || key == D_KEY)
 		ft_move(m, m->player.x + 1, m->player.y);
 	else if (key == LEFT_KEY || key == A_KEY)
-		ft_move(m, m->player.x - 1, m->player.y);
+		ft_move(m, m->player.x - 1 , m->player.y);
 	else if (key == UP_KEY || key == W_KEY)
 		ft_move(m, m->player.x, m->player.y - 1);
 	else if (key == DOWN_KEY || key == S_KEY)

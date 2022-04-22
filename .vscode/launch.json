@@ -11,7 +11,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/so_long",
-			"args": ["maps/map_big.ber"],
+			"args": ["maps/map_small.ber"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [ { "name": "squid", "value": "clam" } ],

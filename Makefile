@@ -6,7 +6,7 @@
 #    By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 16:56:09 by cyelena           #+#    #+#              #
-#    Updated: 2022/04/17 16:03:40 by cyelena          ###   ########.fr        #
+#    Updated: 2022/04/22 21:16:26 by cyelena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS		=	$(SRCS:.c=.o)
 HEAD		=	headers/so_long.h headers/get_next_line.h
 HEAD_LIBFT	=	libft/libft.h
 
-CC			=	gcc
+CC			=	gcc -g
 RM			=	rm -rf
 FLAGS		=	#-Wall -Werror -Wextra
 FLAGS_MXL	=	-lmlx -framework OpenGL -framework AppKit
