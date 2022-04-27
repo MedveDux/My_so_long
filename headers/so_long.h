@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include <stdlib.h>
+# include <time.h>
 # include "../minilibx_opengl_20191021/mlx.h"
 
 # ifndef SCALE
@@ -105,7 +106,7 @@ enum e_objects
 	WALL2,
 	WALL3,
 	WATER,
-	BED,
+	BAD,
 	COIN,
 	PLAYER,
 	EXIT,

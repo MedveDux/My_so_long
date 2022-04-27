@@ -112,31 +112,7 @@ void	seaweed_util(t_data *m, enum e_objects seaweed)
 	}
 }
 
-void	seaweed(t_data *m)
-{
-	static long	count = 0;
-	static int	i = 0;
 
-	if (count % (DELAY) == 0)
-	{
-		seaweed_util(m, i % 3);
-		if (i % 3 == 0)
-			i = 0;
-		i++;
-		count = 0;
-	}
-	count++;
-	// if (count == DELAY - 2000)
-	// 	seaweed_util(m, 0);
-	// else if (count == DELAY)
-	// 	seaweed_util(m, 1);
-	// else if (count == DELAY + 2000)
-	// {
-	// 	seaweed_util(m, 2);
-	// 	count = 0;
-	// }
-	// count++;
-}
 
 
 // 	if (count == (TIME * 1))
@@ -214,7 +190,7 @@ void	render(t_data *m)
 	}
 	mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], \
 				m->player.x * SCALE, m->player.y * SCALE);
-	mlx_put_image_to_window(m->mlx, m->win, m->img[BED], \
+	mlx_put_image_to_window(m->mlx, m->win, m->img[BAD], \
 				m->enemy.x * SCALE, m->enemy.y * SCALE);
 }
 
@@ -231,7 +207,7 @@ void	image(t_data *m)
 			"/Users/cyelena/Desktop/My_so_long/texture/seaweed_3.xpm", &x, &y);
 	m->img[WATER] = mlx_xpm_file_to_image(m->mlx,
 			"./texture/water.xpm", &x, &y);
-	m->img[BED] = mlx_xpm_file_to_image(m->mlx,
+	m->img[BAD] = mlx_xpm_file_to_image(m->mlx,
 			"/Users/cyelena/Desktop/My_so_long/texture/fish_bad.xpm", &x, &y);
 	m->img[COIN] = mlx_xpm_file_to_image(m->mlx,
 			"/Users/cyelena/Desktop/My_so_long/texture/worm.xpm", &x, &y);
@@ -267,7 +243,7 @@ void ft_move(t_data *m, int x, int y)
 	{
 		ft_putstr_fd("You died! ", 1);
 		ft_putnbr_fd(m->steps, 1);
-		ft_putstr_fd("steps!\n", 1);
+		ft_putstr_fd(" steps!\n", 1);
 		ft_exit(m);
 	}
 	if (move == '0')
@@ -306,12 +282,79 @@ int ft_key(int key, t_data *m)
 		ft_move(m, m->player.x, m->player.y + 1);
 	return (0);
 }
+void	ft_move_bad_fish(t_data *m, int x, int y)
+{
+	char	move;
+
+	move = m->map.map[y * m->map.width + x];
+
+	if (m->player.x == x && m->player.y == y)
+	{
+		// mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.x * SCALE, m->player.y * SCALE);
+		// mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
+		// mlx_put_image_to_window(m->mlx, m->win, m->img[BAD], x * SCALE, y * SCALE);
+		ft_putstr_fd("You died! ", 1);
+		ft_putnbr_fd(m->steps, 1);
+		ft_putstr_fd(" steps!\n", 1);
+		ft_exit(m);
+	}
+	if (move == '0')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->enemy.x * SCALE, m->enemy.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[BAD], x * SCALE, y * SCALE);
+		m->enemy.y = y;
+		m->enemy.x = x;
+	}
+}
 
 void	bad_fish(t_data *m)
 {
+	static int	i;
+	// int	count;
+
+	// if (count == DELAY)
+	// {
+		i = rand() % 4;
+		if (i == 0)
+			ft_move_bad_fish(m, m->enemy.x + 1, m->enemy.y);
+		else if (i == 1)
+			ft_move_bad_fish(m, m->enemy.x - 1 , m->enemy.y);
+		else if (i == 2)
+			ft_move_bad_fish(m, m->enemy.x, m->enemy.y - 1);
+		else
+			ft_move_bad_fish(m, m->enemy.x, m->enemy.y + 1);	
+		// count = 0;
+	// }
+	// count++;
 
 }
+void	seaweed(t_data *m)
+{
+	static long	count = 0;
+	static int	i = 0;
 
+	if (count % (DELAY) == 0)
+	{
+		seaweed_util(m, i % 3);
+		bad_fish(m);//
+		if (i % 3 == 0)
+			i = 0;
+		i++;
+		count = 0;
+	}
+	count++;
+	// if (count == DELAY - 2000)
+	// 	seaweed_util(m, 0);
+	// else if (count == DELAY)
+	// 	seaweed_util(m, 1);
+	// else if (count == DELAY + 2000)
+	// {
+	// 	seaweed_util(m, 2);
+	// 	count = 0;
+	// }
+	// count++;
+}
 int	main(int argc, char **argv)
 {
 	t_data	m;
@@ -368,8 +411,9 @@ int	main(int argc, char **argv)
 	// }//
 	mlx_hook(m.win, 2, 0, ft_key, &m);
 	mlx_hook(m.win, 17, 0, ft_exit, &m);
-	mlx_loop_hook(m.mlx, seaweed, &m);
 	// mlx_loop_hook(m.mlx, bad_fish, &m);
-	printf("%d", RAND_MAX);
+	// mlx_loop_hook(m.mlx, seaweed, &m);
+	// printf("\n%d\n", RAND_MAX);
+	// printf("%d\n", srand(time(NULL)));
 	mlx_loop(m.mlx);
 }
