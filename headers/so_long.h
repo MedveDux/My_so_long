@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/19 18:56:15 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/27 16:28:18 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,27 @@ size_t	len_with_sl(const char *s);
 char	*ft_strjoin_with_sl(char const *s1, char const *s2);
 void	error(int error);
 int		fd_map(char *path);
+void	for_parsing(char *line, int error_code, t_data *m, int i);
 //parsing
 int		check_char(t_data *m, char *line, int y, int count);
 int		check_line(char *line, t_data *m, int y);
 void	check_error(int error_code, char *line, int wall);
 void	check_error_after(t_map *m);
+void	parsing(char *argv, t_data *m);
+//mlx_loop_hook
+void	ft_move_bad_fish(t_data *m, int x, int y);
+void	bad_fish(t_data *m);
+void	seaweed(t_data *m);
+void ft_move(t_data *m, int x, int y);
+void	seaweed_util(t_data *m, enum e_objects seaweed);
+//image
+void	check_img(t_data *m);
+void	render(t_data *m);
+void	image(t_data *m);
+// mlx_hook
+void	map_init(t_data *m);
+void	init(t_data *m);
+void	ft_exit(t_data *m);
+void	win_game(t_data *m);
+int		ft_key(int key, t_data *m);
 #endif

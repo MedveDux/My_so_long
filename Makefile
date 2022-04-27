@@ -6,13 +6,14 @@
 #    By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 16:56:09 by cyelena           #+#    #+#              #
-#    Updated: 2022/04/22 21:16:26 by cyelena          ###   ########.fr        #
+#    Updated: 2022/04/27 16:29:56 by cyelena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	so_long
 
-SRCS		=	srcs/so_long.c get_next_line/get_next_line.c srcs/parsing_utils.c srcs/parsing.c
+SRCS		=	srcs/so_long.c get_next_line/get_next_line.c srcs/parsing_utils.c srcs/parsing.c srcs/mlx_loop_hook.c \
+ srcs/image.c srcs/mlx_hook.c
 OBJS		=	$(SRCS:.c=.o)
 
 HEAD		=	headers/so_long.h headers/get_next_line.h

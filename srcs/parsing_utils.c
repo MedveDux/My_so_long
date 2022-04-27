@@ -89,3 +89,17 @@ int	fd_map(char *path)
 		error(FILE_ERROR);
 	return (fd);
 }
+
+void	for_parsing(char *line, int error_code, t_data *m, int i)
+{
+	if (line != NULL)
+	{
+		error_code = check_line(line, m, i + 1);
+		if (error_code != 0)
+		{
+			free(line);
+			free(m->map.map);
+			error(error_code);
+		}
+	}	
+}

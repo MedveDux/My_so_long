@@ -91,3 +91,38 @@ void	check_error_after(t_map *m)
 	else if (m->flags.exit == 0)
 		error (EXIT_ERROR);
 }
+
+void	parsing(char *argv, t_data *m)
+{
+	int		fd;
+	char	*line;
+	int		error_code;
+	int		i;
+	char	*tmp;
+
+	fd = fd_map(argv);
+	line = get_next_line(fd);
+	if (line == NULL)
+	{
+		free (line);
+		error(EXTENTION_ERROR);
+	}
+	m->map.width = len_with_sl(line);
+	error_code = check_line(line, m, 0);
+	check_error(error_code, line, m->map.flags.wall);
+	i = 0;
+	while (line)
+	{
+		tmp = m->map.map;
+		m->map.map = ft_strjoin_with_sl(tmp, line);
+		free(tmp);
+		free(line);
+		if (m->map.map == NULL)
+			error (42);
+		line = get_next_line(fd);
+		for_parsing(line, error_code, m, i);
+		i++;
+	}
+	m->map.height = i;
+	check_error_after(&m->map);
+}
