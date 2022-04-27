@@ -307,6 +307,11 @@ int ft_key(int key, t_data *m)
 	return (0);
 }
 
+void	bad_fish(t_data *m)
+{
+
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	m;
@@ -353,16 +358,18 @@ int	main(int argc, char **argv)
 	// mlx_put_image_to_window(m.mlx, m.win, chr, 0, 100);
 	// chr = mlx_xpm_file_to_image(m.mlx, "/Users/cyelena/Desktop/My_so_long/texture/seaweed_3.xpm", &x, &y);
 	// mlx_put_image_to_window(m.mlx, m.win, chr, 0, 200);
-	i = m.map.height;//
-	tmp = m.map.map;//
-	while (i--)//
-	{//
-		write(1, tmp, m.map.width);//
-		write(1, "\n", 1);//
-		tmp += m.map.width;//
-	}//
+	// i = m.map.height;//
+	// tmp = m.map.map;//
+	// while (i--)//
+	// {//
+	// 	write(1, tmp, m.map.width);//
+	// 	write(1, "\n", 1);//
+	// 	tmp += m.map.width;//
+	// }//
 	mlx_hook(m.win, 2, 0, ft_key, &m);
 	mlx_hook(m.win, 17, 0, ft_exit, &m);
 	mlx_loop_hook(m.mlx, seaweed, &m);
+	// mlx_loop_hook(m.mlx, bad_fish, &m);
+	printf("%d", RAND_MAX);
 	mlx_loop(m.mlx);
 }

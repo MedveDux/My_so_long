@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "get_next_line.h"
+# include <stdlib.h>
 # include "../minilibx_opengl_20191021/mlx.h"
 
 # ifndef SCALE
