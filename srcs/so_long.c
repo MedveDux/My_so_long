@@ -166,11 +166,11 @@ void	render(t_data *m)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i++ < m->map.height)
+	i = -1;
+	while (++i < m->map.height)
 	{
-		j = 0;
-		while (j++ < m->map.width)
+		j = -1;
+		while (++j < m->map.width)
 		{
 			mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], \
 				j * SCALE, i * SCALE);
@@ -412,7 +412,7 @@ int	main(int argc, char **argv)
 	mlx_hook(m.win, 2, 0, ft_key, &m);
 	mlx_hook(m.win, 17, 0, ft_exit, &m);
 	// mlx_loop_hook(m.mlx, bad_fish, &m);
-	// mlx_loop_hook(m.mlx, seaweed, &m);
+	mlx_loop_hook(m.mlx, seaweed, &m);
 	// printf("\n%d\n", RAND_MAX);
 	// printf("%d\n", srand(time(NULL)));
 	mlx_loop(m.mlx);
