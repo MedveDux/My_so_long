@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:23:55 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/27 16:25:09 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 16:58:16 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ void	check_img(t_data *m)
 	}
 }
 
-void	render(t_data *m)
+void	render(t_data *m, int i)
 {
-	int	i;
 	int	j;
 
-	i = -1;
 	while (++i < m->map.height)
 	{
 		j = -1;
@@ -88,4 +86,40 @@ void	image(t_data *m)
 	m->img[EXIT] = mlx_xpm_file_to_image(m->mlx,
 			"/Users/cyelena/Desktop/My_so_long/texture/bubble.xpm", &x, &y);
 	check_img(m);
+}
+
+void	ft_image(int move, t_data *m, int x, int y)
+{
+	if (move == '0')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			m->player.x * SCALE, m->player.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER],
+			x * SCALE, y * SCALE);
+	}
+	else if (move == 'C')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			m->player.x * SCALE, m->player.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER],
+			x * SCALE, y * SCALE);
+		m->map.map[y * m->map.width + x] = '0';
+		m->map.flags.coin--;
+	}
+}
+
+char	*ft_part_parsing(char *argv, t_data *m, int *fd, char *line)
+{
+	*fd = fd_map(argv);
+	line = get_next_line(*fd);
+	if (line == NULL)
+	{
+		free (line);
+		error(EXTENTION_ERROR);
+	}
+	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:20:19 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/27 16:23:12 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 16:34:26 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_move_bad_fish(t_data *m, int x, int y)
 	char	move;
 
 	move = m->map.map[y * m->map.width + x];
-
 	if (m->player.x == x && m->player.y == y)
 	{
 		ft_putstr_fd("You died! ", 1);
@@ -27,9 +26,12 @@ void	ft_move_bad_fish(t_data *m, int x, int y)
 	}
 	if (move == '0')
 	{
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->enemy.x * SCALE, m->enemy.y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[BAD], x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			m->enemy.x * SCALE, m->enemy.y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER],
+			x * SCALE, y * SCALE);
+		mlx_put_image_to_window(m->mlx, m->win, m->img[BAD],
+			x * SCALE, y * SCALE);
 		m->enemy.y = y;
 		m->enemy.x = x;
 	}
@@ -43,11 +45,11 @@ void	bad_fish(t_data *m)
 	if (i == 0)
 		ft_move_bad_fish(m, m->enemy.x + 1, m->enemy.y);
 	else if (i == 1)
-		ft_move_bad_fish(m, m->enemy.x - 1 , m->enemy.y);
+		ft_move_bad_fish(m, m->enemy.x - 1, m->enemy.y);
 	else if (i == 2)
 		ft_move_bad_fish(m, m->enemy.x, m->enemy.y - 1);
 	else
-		ft_move_bad_fish(m, m->enemy.x, m->enemy.y + 1);	
+		ft_move_bad_fish(m, m->enemy.x, m->enemy.y + 1);
 }
 
 void	seaweed(t_data *m)
@@ -58,7 +60,7 @@ void	seaweed(t_data *m)
 	if (count % (DELAY) == 0)
 	{
 		seaweed_util(m, i % 3);
-		bad_fish(m);//
+		bad_fish(m);
 		if (i % 3 == 0)
 			i = 0;
 		i++;
@@ -67,7 +69,7 @@ void	seaweed(t_data *m)
 	count++;
 }
 
-void ft_move(t_data *m, int x, int y)
+void	ft_move(t_data *m, int x, int y)
 {
 	char	move;
 
@@ -83,20 +85,7 @@ void ft_move(t_data *m, int x, int y)
 		ft_putstr_fd(" steps!\n", 1);
 		ft_exit(m);
 	}
-	if (move == '0')
-	{
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.x * SCALE, m->player.y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], x * SCALE, y * SCALE);
-	}
-	else if (move == 'C')
-	{
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], m->player.x * SCALE, m->player.y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[WATER], x * SCALE, y * SCALE);
-		mlx_put_image_to_window(m->mlx, m->win, m->img[PLAYER], x * SCALE, y * SCALE);
-		m->map.map[y * m->map.width + x] = '0';
-		m->map.flags.coin--;
-	}
+	ft_image(move, m, x, y);
 	m->player.y = y;
 	m->player.x = x;
 	m->steps++;
@@ -120,7 +109,8 @@ void	seaweed_util(t_data *m, enum e_objects seaweed)
 				mlx_put_image_to_window(m->mlx, m->win, \
 					m->img[seaweed], j * SCALE, i * SCALE);
 				mlx_string_put(m->mlx, m->win, 10, 15, 0x880000, "Moves: ");
-				mlx_string_put(m->mlx, m->win, 70, 15, 0x880000, ft_itoa(m->steps));
+				mlx_string_put(m->mlx, m->win, 70, 15, 0x880000,
+					ft_itoa(m->steps));
 			}
 			j++;
 		}

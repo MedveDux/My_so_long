@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/27 16:28:18 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:00:49 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ enum e_objects
 };
 
 //so_long
-
+void	part_main(int argc, char **argv, t_data *m);
 //parsing_utils
 size_t	len_with_sl(const char *s);
 char	*ft_strjoin_with_sl(char const *s1, char const *s2);
@@ -130,12 +130,14 @@ void	parsing(char *argv, t_data *m);
 void	ft_move_bad_fish(t_data *m, int x, int y);
 void	bad_fish(t_data *m);
 void	seaweed(t_data *m);
-void ft_move(t_data *m, int x, int y);
+void	ft_move(t_data *m, int x, int y);
 void	seaweed_util(t_data *m, enum e_objects seaweed);
 //image
 void	check_img(t_data *m);
-void	render(t_data *m);
+void	render(t_data *m, int i);
 void	image(t_data *m);
+void	ft_image(int move, t_data *m, int x, int y);
+char	*ft_part_parsing(char *argv, t_data *m, int *fd, char *line);
 // mlx_hook
 void	map_init(t_data *m);
 void	init(t_data *m);

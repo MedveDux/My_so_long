@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:15:08 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/19 18:41:33 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 16:58:07 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,7 @@ void	parsing(char *argv, t_data *m)
 	int		i;
 	char	*tmp;
 
-	fd = fd_map(argv);
-	line = get_next_line(fd);
-	if (line == NULL)
-	{
-		free (line);
-		error(EXTENTION_ERROR);
-	}
+	line = ft_part_parsing(argv, m, &fd, line);
 	m->map.width = len_with_sl(line);
 	error_code = check_line(line, m, 0);
 	check_error(error_code, line, m->map.flags.wall);
