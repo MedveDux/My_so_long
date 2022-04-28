@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:20:19 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 16:34:26 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:12:49 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	bad_fish(t_data *m)
 		ft_move_bad_fish(m, m->enemy.x, m->enemy.y + 1);
 }
 
-void	seaweed(t_data *m)
+int	seaweed(t_data *m)
 {
 	static long	count = 0;
 	static int	i = 0;
@@ -67,6 +67,7 @@ void	seaweed(t_data *m)
 		count = 0;
 	}
 	count++;
+	return (0);
 }
 
 void	ft_move(t_data *m, int x, int y)

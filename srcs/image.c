@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:23:55 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 16:58:16 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:17:38 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ char	*ft_part_parsing(char *argv, t_data *m, int *fd, char *line)
 		free (line);
 		error(EXTENTION_ERROR);
 	}
+	m->map.width = len_with_sl(line);
 	return (line);
 }

@@ -6,13 +6,13 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:55:56 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 17:00:37 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:14:02 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/so_long.h"
 
-void	part_main(int argc, char **argv, t_data *m)
+void	part_main(char **argv, t_data *m)
 {
 	init(m);
 	parsing(argv[1], m);
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Wrong number of arguments!", 2);
 		return (EXIT_FAILURE);
 	}
-	part_main(argc, argv, &m);
+	part_main(argv, &m);
 	m.win = mlx_new_window(m.mlx, m.map.width * SCALE,
 			m.map.height * SCALE, "so long");
 	if (m.win == NULL)

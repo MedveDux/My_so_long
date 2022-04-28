@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:26:17 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 16:25:42 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:20:26 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,16 @@ void	init(t_data *m)
 	m->steps = 0;
 	m->player.x = 0;
 	m->player.y = 0;
-	m->enemy.prev_x = 0;
-	m->enemy.prev_y = 0;
 	m->enemy.x = 0;
 	m->enemy.y = 0;
 	map_init(m);
 }
 
-void	ft_exit(t_data *m)
+int	ft_exit(t_data *m)
 {
 	free(m->map.map);
 	exit(0);
+	return (0);
 }
 
 void	win_game(t_data *m)

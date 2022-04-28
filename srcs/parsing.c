@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:15:08 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 16:58:07 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:19:53 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_char(t_data *m, char *line, int y, int count)
 
 int	check_line(char *line, t_data *m, int y)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (line[i] != '1')
@@ -100,8 +100,8 @@ void	parsing(char *argv, t_data *m)
 	int		i;
 	char	*tmp;
 
+	line = NULL;
 	line = ft_part_parsing(argv, m, &fd, line);
-	m->map.width = len_with_sl(line);
 	error_code = check_line(line, m, 0);
 	check_error(error_code, line, m->map.flags.wall);
 	i = 0;

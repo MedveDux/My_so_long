@@ -6,7 +6,7 @@
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/04/28 17:00:49 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/04/28 17:20:05 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,23 @@ typedef struct s_flags
 
 typedef struct s_map
 {
-	size_t	height;
-	size_t	width;
+	int		height;
+	int		width;
 	t_flags	flags;
 	char	*map;
 }	t_map;
 
 typedef struct s_player
 {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
+	
 }	t_player;
 
 typedef struct s_enemy
 {
-	size_t	x;
-	size_t	y;
-	size_t	prev_x;
-	size_t	prev_y;
+	int	x;
+	int	y;
 }	t_enemy;
 
 typedef struct s_data
@@ -113,7 +112,7 @@ enum e_objects
 };
 
 //so_long
-void	part_main(int argc, char **argv, t_data *m);
+void	part_main(char **argv, t_data *m);
 //parsing_utils
 size_t	len_with_sl(const char *s);
 char	*ft_strjoin_with_sl(char const *s1, char const *s2);
@@ -129,7 +128,7 @@ void	parsing(char *argv, t_data *m);
 //mlx_loop_hook
 void	ft_move_bad_fish(t_data *m, int x, int y);
 void	bad_fish(t_data *m);
-void	seaweed(t_data *m);
+int		seaweed(t_data *m);
 void	ft_move(t_data *m, int x, int y);
 void	seaweed_util(t_data *m, enum e_objects seaweed);
 //image
@@ -141,7 +140,7 @@ char	*ft_part_parsing(char *argv, t_data *m, int *fd, char *line);
 // mlx_hook
 void	map_init(t_data *m);
 void	init(t_data *m);
-void	ft_exit(t_data *m);
+int		ft_exit(t_data *m);
 void	win_game(t_data *m);
 int		ft_key(int key, t_data *m);
 #endif
