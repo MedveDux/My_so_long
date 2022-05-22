@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyelena <cyelena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 16:26:05 by cyelena           #+#    #+#             */
-/*   Updated: 2022/05/22 15:06:20 by cyelena          ###   ########.fr       */
+/*   Updated: 2022/05/22 16:37:54 by cyelena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../libft/libft.h"
-# include "get_next_line.h"
+# include "get_next_line_bonus.h"
 # include <stdlib.h>
 # include <time.h>
 # include "../minilibx_opengl_20191021/mlx.h"
